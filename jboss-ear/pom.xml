@@ -18,6 +18,55 @@
 			<artifactId>jboss-ejb</artifactId>
 			<type>ejb</type>
 		</dependency>
+		<dependency>
+			<groupId>org.strangeforest.test</groupId>
+			<artifactId>jboss-ejb2</artifactId>
+			<type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.spec</groupId>
+			<artifactId>jboss-javaee-6.0</artifactId>
+			<type>pom</type>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-library</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.arquillian.junit</groupId>
+			<artifactId>arquillian-junit-container</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.shrinkwrap.descriptors</groupId>
+			<artifactId>shrinkwrap-descriptors-impl</artifactId>
+			<version>1.1.0-alpha-5</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.servicemix.bundles</groupId>
+			<artifactId>org.apache.servicemix.bundles.xalan-serializer</artifactId>
+			<version>2.7.1_4</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle.coherence.hibernate</groupId>
+			<artifactId>coherence-hibernate-second-level-cache</artifactId>
+			<version>1.0.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.oracle.coherence</groupId>
+					<artifactId>coherence</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 	</dependencies>
 
 	<build>

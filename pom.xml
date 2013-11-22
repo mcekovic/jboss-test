@@ -17,7 +17,9 @@
 
 	<modules>
 		<module>jboss-ejb</module>
+		<module>jboss-ejb2</module>
 		<module>jboss-ear</module>
+		<module>jboss-ear2</module>
 		<module>jboss-appclient</module>
 	</modules>
 
@@ -101,6 +103,18 @@
 				<artifactId>jboss-ejb</artifactId>
 				<type>ejb</type>
 				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.strangeforest.test</groupId>
+				<artifactId>jboss-ejb2</artifactId>
+				<type>ejb</type>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>1.7.5</version>
+				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.jboss.spec</groupId>

@@ -14,16 +14,16 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
 @RunWith(Arquillian.class)
-public class HelloBeanIT {
+public class HelloBean2IT {
 
 	@Deployment
 	public static Archive<?> createDeployment() {
 		return ShrinkWrap.create(JavaArchive.class)
-			.addClasses(RemoteHello.class, HelloBean.class, RemoteHello2.class, HelloBean2.class)
+			.addClasses(RemoteHello2.class, HelloBean2.class)
 			.addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
 	}
 
-	@EJB private RemoteHello hello;
+	@EJB private RemoteHello2 hello;
 
 	private static final String NAME = "World";
 
