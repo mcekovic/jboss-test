@@ -5,7 +5,6 @@ import javax.ejb.*;
 import org.jboss.arquillian.container.test.api.*;
 import org.jboss.arquillian.junit.*;
 import org.jboss.shrinkwrap.api.*;
-import org.jboss.shrinkwrap.api.asset.*;
 import org.jboss.shrinkwrap.api.spec.*;
 import org.junit.*;
 import org.junit.runner.*;
@@ -19,8 +18,9 @@ public class HelloBeanIT {
 	@Deployment
 	public static Archive<?> createDeployment() {
 		return ShrinkWrap.create(JavaArchive.class)
-			.addClasses(RemoteHello.class, HelloBean.class, RemoteHello2.class, HelloBean2.class)
-			.addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
+			.addPackage(HelloBean.class.getPackage())
+			.addClasses(RemoteHello2.class, HelloBean2.class)
+			.addAsResource("META-INF/beans.xml");
 	}
 
 	@EJB private RemoteHello hello;

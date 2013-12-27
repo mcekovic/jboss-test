@@ -6,7 +6,7 @@ import javax.jms.*;
 
 import org.slf4j.*;
 
-@Stateless @Remote(RemoteHello.class)
+@Stateless @Remote(RemoteHello.class) @Traceable
 public class HelloBean implements RemoteHello {
 
 	@EJB private RemoteHello2 hello2;
@@ -26,11 +26,13 @@ public class HelloBean implements RemoteHello {
 		LOGGER.info("HelloBean destroyed.");
 	}
 
+	@Traceable(trackTime = true)
 	@Override public String hello(String name) {
 		LOGGER.info("HelloBean helloed.");
 		return "Hello " + name;
 	}
 
+	@Traceable
 	@Override public String hello2(String name) {
 		LOGGER.info("HelloBean helloed 2.");
 		return hello2.hello(name);
