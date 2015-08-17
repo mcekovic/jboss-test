@@ -24,6 +24,7 @@ public class HelloBeanIT {
 	}
 
 	@EJB private RemoteHello hello;
+	@EJB private InitHello initHello;
 
 	private static final String NAME = "World";
 
@@ -31,5 +32,10 @@ public class HelloBeanIT {
 	public void hello() {
 		String helloMsg = hello.hello(NAME);
 		assertThat(helloMsg, containsString(NAME));
+	}
+
+	@Test
+	public void waitForSendingFinished() {
+		initHello.waitForReceivingFinished();
 	}
 }
