@@ -11,7 +11,7 @@ import org.slf4j.*;
 @ConcurrencyManagement(ConcurrencyManagementType.BEAN)
 public class InitHello {
 
-	public static final int COUNT = 10000;
+	public static final int COUNT = 50000;
 	public static final int STEP = 100;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(InitHello.class);
@@ -31,10 +31,10 @@ public class InitHello {
 	@Asynchronous
 	public void sendHelloMessages() {
 		for (int count = 1; count <= COUNT; count++) {
-//			try {
-//				Thread.sleep(10L);
-//			}
-//			catch (InterruptedException ignored) {}
+			try {
+				Thread.sleep(10L);
+			}
+			catch (InterruptedException ignored) {}
 			hello.sendHello("Message");
 			if (count == 1)
 				T0.set(System.currentTimeMillis());

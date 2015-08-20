@@ -5,7 +5,7 @@
 	<container qualifier="jbossas-local" default="true">
 		<configuration>
 			<property name="serverConfig">${jbossas.serverConfig:standalone.xml}</property>
-			<property name="javaVmArguments">-Xms512m -Xmx1024m -XX:MaxPermSize=512m -Djboss.server.config.dir=jboss-ejb/src/test/resources/jboss-config</property>
+			<property name="javaVmArguments">-Xms512m -Xmx1024m -XX:MaxPermSize=512m -Djboss.server.config.dir=jboss-ejb/src/test/resources/jboss-config -agentlib:jdwp=transport=dt_socket,address=8787,server=y,suspend=n</property>
 		</configuration>
 	</container>
 	<container qualifier="jbossas-remote">
