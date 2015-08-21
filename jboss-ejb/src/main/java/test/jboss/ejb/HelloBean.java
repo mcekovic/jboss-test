@@ -11,8 +11,8 @@ public class HelloBean implements RemoteHello {
 
 	@EJB private RemoteHello2 hello2;
 
-	@Resource(lookup = "java:/ConnectionFactory") private ConnectionFactory connectionFactory;
-	@Resource(lookup = "java:/queue/hello") private Queue queue;
+	@Resource(lookup = "java:/ConnectionFactory2") private ConnectionFactory connectionFactory;
+	@Resource(lookup = "java:/queue/hello2") private Queue queue;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(HelloBean.class);
 
@@ -38,6 +38,7 @@ public class HelloBean implements RemoteHello {
 		return hello2.hello(name);
 	}
 
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	@Override public void sendHello(String name) {
 		try {
 			Connection connection = connectionFactory.createConnection();

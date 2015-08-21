@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<server xmlns="urn:jboss:domain:1.6">
+<server xmlns="urn:jboss:domain:1.7">
 
     <extensions>
         <extension module="org.jboss.as.connector"/>
@@ -53,7 +53,7 @@
     </management>
 
     <profile>
-        <subsystem xmlns="urn:jboss:domain:logging:1.4">
+        <subsystem xmlns="urn:jboss:domain:logging:1.5">
             <console-handler name="CONSOLE">
                 <level name="DEBUG"/>
                 <formatter>
@@ -61,7 +61,7 @@
                 </formatter>
             </console-handler>
             <logger category="com.arjuna">
-                <level name="DEBUG"/>
+                <level name="INFO"/>
             </logger>
             <logger category="org.apache.tomcat.util.modeler">
                 <level name="WARN"/>
@@ -70,7 +70,7 @@
                 <level name="DEBUG"/>
             </logger>
             <logger category="org.apache.activemq">
-                <level name="DEBUG"/>
+                <level name="INFO"/>
             </logger>
             <logger category="sun.rmi">
                 <level name="WARN"/>
@@ -105,7 +105,7 @@
             <jboss-descriptor-property-replacement>true</jboss-descriptor-property-replacement>
             <annotation-property-replacement>false</annotation-property-replacement>
         </subsystem>
-        <subsystem xmlns="urn:jboss:domain:ejb3:1.4">
+        <subsystem xmlns="urn:jboss:domain:ejb3:1.5">
             <session-bean>
                 <stateless>
                     <bean-instance-pool-ref pool-name="slsb-strict-max-pool"/>
@@ -132,8 +132,10 @@
                 <file-passivation-store name="file"/>
             </passivation-stores>
             <async thread-pool-name="default"/>
-            <timer-service thread-pool-name="default">
-                <data-store path="timer-service-data" relative-to="jboss.server.data.dir"/>
+            <timer-service thread-pool-name="default" default-data-store="default-file-store">
+                <data-stores>
+                    <file-data-store name="default-file-store" path="timer-service-data" relative-to="jboss.server.data.dir"/>
+                </data-stores>
             </timer-service>
             <remote connector-ref="remoting-connector" thread-pool-name="default"/>
             <thread-pools>
@@ -180,7 +182,7 @@
             <remote-naming/>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:pojo:1.0"/>
-        <subsystem xmlns="urn:jboss:domain:remoting:1.1">
+        <subsystem xmlns="urn:jboss:domain:remoting:1.2">
             <connector name="remoting-connector" socket-binding="remoting" security-realm="ApplicationRealm"/>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:resource-adapters:1.1">
@@ -228,6 +230,49 @@
                         </admin-object>
                     </admin-objects>
                 </resource-adapter>
+                <resource-adapter id="org.apache.activemq.ra.2">
+                    <module slot="main" id="org.apache.activemq"/>
+                    <transaction-support>XATransaction</transaction-support>
+                    <config-property name="UseInboundSession">
+                        false
+                    </config-property>
+                    <config-property name="Password">
+                        admin
+                    </config-property>
+                    <config-property name="UserName">
+                        admin
+                    </config-property>
+                    <config-property name="ServerUrl">
+                        tcp://sysintnode5.beg.finsoft.com:61616?jms.rmIdFromConnectionId=true
+                    </config-property>
+                    <connection-definitions>
+                        <connection-definition class-name="org.apache.activemq.ra.ActiveMQManagedConnectionFactory" jndi-name="java:/ConnectionFactory2" enabled="true" use-java-context="true" pool-name="ConnectionFactory">
+                            <xa-pool>
+                                <min-pool-size>1</min-pool-size>
+                                <max-pool-size>50</max-pool-size>
+                                <is-same-rm-override>false</is-same-rm-override>
+                            </xa-pool>
+                            <validation>
+                                <background-validation>false</background-validation>
+                                <background-validation-millis>1</background-validation-millis>
+                                <use-fast-fail>false</use-fast-fail>
+                            </validation>
+                            <recovery no-recovery="true">
+                                <recover-credential>
+                                    <user-name>admin</user-name>
+                                    <password>admin</password>
+                                </recover-credential>
+                            </recovery>
+                        </connection-definition>
+                    </connection-definitions>
+                    <admin-objects>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/hello2" use-java-context="true" pool-name="hello">
+                            <config-property name="PhysicalName">
+                                hello2
+                            </config-property>
+                        </admin-object>
+                    </admin-objects>
+                </resource-adapter>
             </resource-adapters>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:sar:1.0"/>
@@ -265,7 +310,7 @@
             <recovery-environment socket-binding="txn-recovery-environment" status-socket-binding="txn-status-manager"/>
             <coordinator-environment default-timeout="3600"/>
         </subsystem>
-        <subsystem xmlns="urn:jboss:domain:web:2.1" default-virtual-server="default-host" native="false">
+        <subsystem xmlns="urn:jboss:domain:web:2.2" default-virtual-server="default-host" native="false">
             <connector name="http" protocol="HTTP/1.1" scheme="http" socket-binding="http"/>
             <virtual-server name="default-host" enable-welcome-root="true">
                 <alias name="localhost"/>
@@ -307,5 +352,4 @@
         <socket-binding name="txn-recovery-environment" port="4712"/>
         <socket-binding name="txn-status-manager" port="4713"/>
     </socket-binding-group>
-
 </server>

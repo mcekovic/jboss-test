@@ -5,12 +5,13 @@ import java.util.concurrent.atomic.*;
 import javax.ejb.*;
 import javax.jms.*;
 
+import org.jboss.ejb3.annotation.*;
 import org.slf4j.*;
 
 @MessageDriven(name = "HelloListener", activationConfig = {
 	@ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto-acknowledge"),
 	@ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
-	@ActivationConfigProperty(propertyName = "destination", propertyValue = "java:/queue/hello"),
+	@ActivationConfigProperty(propertyName = "destination", propertyValue = "java:/queue/hello2"),
 	@ActivationConfigProperty(propertyName = "useJndi", propertyValue = "true")
 })
 // ActiveMQ Physical Name
@@ -19,6 +20,7 @@ import org.slf4j.*;
 // ActiveMQ JNDI Name
 //@ActivationConfigProperty(propertyName = "destination", propertyValue = "java:/queue/hello"),
 //@ActivationConfigProperty(propertyName = "useJndi", propertyValue = "true")
+@ResourceAdapter("org.apache.activemq.ra.2x")
 public class HelloListener implements MessageListener {
 
 	@EJB private RemoteHello hello;
